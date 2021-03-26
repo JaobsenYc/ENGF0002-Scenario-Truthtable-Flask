@@ -126,3 +126,33 @@ def delete_book(id):
         book.delete(commit=True)
         return Success(14)
     raise BookNotFound
+
+
+from app.truthtable.main import getParse
+
+
+@book_api.route("/valid")
+def valid():
+    """
+    Check validity of expreesion
+    """
+    expression = request.args.get("expression")
+    parseTree = getParse(expression)
+
+    return parseTree is not None
+
+
+from app.truthtable.truthTable import truthTable
+
+
+@book_api.route("/truthtable")
+def truthtable():
+    """
+    Return html format of truth table
+    """
+    expression = request.args.get("expression")
+    parseTree = getParse(expression)
+    truthGen = truthTable(parseTree)
+    res=truthGen.generateTruth()
+
+    return res

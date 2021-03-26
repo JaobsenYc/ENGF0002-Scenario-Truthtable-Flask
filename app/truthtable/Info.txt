@@ -1,0 +1,17 @@
+Grammar:
+
+exp ::= A,B.....,Z
+    | NOT exp
+    | (exp CONJ exp)
+    | (exp DISJ exp)
+    | (exp IMPL exp)
+    | (exp BIIMPL exp)
+
+Order of Precedence: Same order as grammar, NOT, CONJ, DISJ ....
+
+
+Expression -> Disjunction ((IMPL|BIIMPL) Disjunction)*
+Disjunction -> Conjunction (DISJ Conjunction)*
+Conjunction -> Not (CONJ Not)*
+Not -> NOT VAR
+Variable -> VAR

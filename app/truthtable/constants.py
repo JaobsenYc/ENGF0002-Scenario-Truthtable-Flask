@@ -1,0 +1,10 @@
+alphabet = list(map(chr, range(ord('A'), ord('Z') + 1)))
+VAR = "VAR"
+NOT = "NOT"
+CONJ = "CONJ"
+DISJ = "DISJ"
+IMPL = "IMPL"
+BIIMPL = "BIIMPL"
+LPAREN = "LPAREN"
+RPAREN = "RPAREN"
+Invalid_Input = 0
