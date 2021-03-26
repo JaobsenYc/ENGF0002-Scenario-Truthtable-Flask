@@ -1,4 +1,4 @@
-from app.truthtable.constants import *
+from constants import *
 
 class varNode:
     def __init__(self, var):
@@ -79,15 +79,21 @@ class Parser:
             if self.current_lexeme.type == RPAREN:
                 self.nextLex()
                 return newProp
+            elif self.current_lexeme.type in operations:
+                return newProp
             else:
+                #print(self.current_lexeme)
                 return None
 
     def binOp(self, arg, operation):
         leftNode = arg()
+        #print("Left Node: ",leftNode)
         while self.current_lexeme.type in operation:
             op = self.current_lexeme
+            #print("Operation:", op)
             self.nextLex()
             rightNode = arg()
+            #print("Right node: ",rightNode)
             leftNode = BinNode(leftNode, rightNode, op)
         return leftNode
 

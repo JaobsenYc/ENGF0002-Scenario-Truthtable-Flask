@@ -7,4 +7,5 @@ IMPL = "IMPL"
 BIIMPL = "BIIMPL"
 LPAREN = "LPAREN"
 RPAREN = "RPAREN"
+operations = [NOT,CONJ,DISJ,IMPL,BIIMPL]
 Invalid_Input = 0

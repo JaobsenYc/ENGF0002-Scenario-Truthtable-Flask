@@ -1,6 +1,7 @@
 import ttg
 import prettytable
 
+
 class truthTable:
     def __init__(self,AST):
         self.AST = AST
@@ -27,10 +28,8 @@ class truthTable:
 
     def generateTruth(self):
         #print(ttg.Truths(['p','q','r'],['(p or (~q)) => r'],ints=False))
-        # print(ttg.Truths(self.propVar, self.proposition, ints=False))
-        truth=ttg.Truths(self.propVar, self.proposition, ints=False)
-        ans=truth.as_tabulate(index=False, table_format='html')
+        #print(ttg.Truths(self.propVar, self.proposition, ints=False))
+        truth = ttg.Truths(self.propVar, self.proposition, ints=False)
+        ans = truth.as_tabulate(index=False, table_format='html')
 
-        # table=prettytable()
-        # res=prettytable.get_html_string(truth)
         return ans

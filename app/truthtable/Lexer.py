@@ -1,4 +1,4 @@
-from app.truthtable.constants import *
+from constants import *
 
 
 class Token:
@@ -78,6 +78,10 @@ class Lexer:
             else:
                 return self.error()
 
+        if tokens[0].type != LPAREN:
+            tokens.insert(0,Token(LPAREN))
+        if tokens[-1].type != RPAREN:
+            tokens.append(Token(RPAREN))
         return tokens
 
 
