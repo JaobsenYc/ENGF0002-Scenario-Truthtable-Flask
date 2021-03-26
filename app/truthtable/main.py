@@ -1,7 +1,7 @@
-from app.truthtable.Lexer import Lexer
-from app.truthtable.Parser import Parser
-from app.truthtable.constants import *
-from app.truthtable.truthTable import truthTable
+from Lexer import Lexer
+from Parser import Parser
+from constants import *
+from truthTable import truthTable
 
 def output(i):
     if i is None:
@@ -28,20 +28,25 @@ def getParseRun():
         output(getParse(text))
 
 def getParseDebug():
-    t = "(a /\ b /\ !c)"
+    t = "(a /\ !b /\ c)"
     print(t)
     a = getParse(t,True)
     output(a)
 
+def goodParse(st):
+    parseTree = getParse(st)
+    if parseTree is None:
+        return False
+    return True
 
 def run():
     while True:
-        parseTree = getParse("a /\ b /\ !c")
+        parseTree = getParse(input("Enter a proposition: "))
         if parseTree is None:
             print("Invalid")
         else:
             truthGen = truthTable(parseTree)
-            print(truthGen.generateTruth())
+            truthGen.generateTruth()
 
 if __name__ == "__main__":
     #getParseDebug()
