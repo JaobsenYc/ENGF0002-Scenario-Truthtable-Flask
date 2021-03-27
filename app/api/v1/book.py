@@ -22,6 +22,9 @@ from app.validator.schema import (
     BookSchemaList,
 )
 
+from app.truthtable.truthTable import *
+from app.truthtable.main import *
+
 book_api = Redprint("book")
 
 
@@ -142,9 +145,6 @@ def valid():
     return parseTree is not None
 
 
-from app.truthtable.truthTable import truthTable
-
-
 @book_api.route("/truthtable")
 def truthtable():
     """
@@ -156,3 +156,16 @@ def truthtable():
     res=truthGen.generateTruth()
 
     return res
+
+@book_api.route("/truthtable/correct")
+def isCorrect(ans):
+    """
+    Return boolean indicating correctness of submitted ans
+    ans in the form of [True,False,False,False]
+    """
+
+    expression = request.args.get("expression")
+    parseTree = getParse(expression)
+    truthGen = truthTable(parseTree)
+    res = truthGen.getResults()
+    return res == ans

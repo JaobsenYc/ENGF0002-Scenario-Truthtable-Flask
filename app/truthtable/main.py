@@ -3,6 +3,8 @@ from Parser import Parser
 from constants import *
 from truthTable import truthTable
 
+parseTree = ""
+
 def output(i):
     if i is None:
         print("Invalid input")
@@ -38,6 +40,12 @@ def goodParse(st):
     if parseTree is None:
         return False
     return True
+
+# def isCorrect(ans):
+#     res = truthTable.getResults()
+#     if res == ans:
+#         return True
+#     return False
 
 def run():
     while True:
