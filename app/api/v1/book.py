@@ -155,7 +155,7 @@ def truthtable():
     truthGen = truthTable(parseTree)
     res = truthGen.generateTruth()
 
-    return
+    return res
 
 
 import json
