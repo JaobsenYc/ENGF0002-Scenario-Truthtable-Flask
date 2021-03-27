@@ -33,3 +33,10 @@ class truthTable:
         ans = truth.as_tabulate(index=False, table_format='html')
 
         return ans
+
+    def getResults(self):
+        NgC = ttg.Truths(self.propVar, self.proposition, ints=False)
+        res = NgC.as_pandas()[self.proposition].values.tolist()
+        res = [i[0] for i in res]
+
+        return res
