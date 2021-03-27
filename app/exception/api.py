@@ -16,3 +16,7 @@ class RefreshFailed(Failed):
     message = "令牌刷新失败"
     message_code = 10052
     _config = False
+
+class StrIndexError(Failed):
+    message = "Index Error"
+    _config = False

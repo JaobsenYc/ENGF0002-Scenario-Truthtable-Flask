@@ -1,4 +1,4 @@
-from main import *
+from app.truthtable.main import *
 
 
 def test():
