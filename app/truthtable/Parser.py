@@ -1,5 +1,6 @@
 from app.truthtable.constants import *
 
+
 class varNode:
     def __init__(self, var):
         self.var = var
@@ -62,28 +63,34 @@ class Parser:
             self.current_lexeme = self.token_stream[self.pos]
         return self.current_lexeme
 
+    def recurseExp(self):
+        self.nextLex()
+        newProp = self.proposition()
+        self.nextLex()
+        if self.current_lexeme.type == RPAREN:
+            self.nextLex()
+            return newProp
+        elif self.current_lexeme.type in operations:
+            return newProp
+        else:
+            # print(self.current_lexeme)
+            return None
+
     def Variable(self):
         lex = self.current_lexeme
         if lex.type == NOT:
             self.nextLex()
-            var = self.current_lexeme
+            if self.current_lexeme.type == LPAREN:
+                var = self.recurseExp()
+            else:
+                var = self.current_lexeme
             ret = NotNode(var,lex)
             return ret
         elif lex.type == VAR:
             self.nextLex()
             return varNode(lex)
         elif lex.type == LPAREN:
-            self.nextLex()
-            newProp = self.proposition()
-            self.nextLex()
-            if self.current_lexeme.type == RPAREN:
-                self.nextLex()
-                return newProp
-            elif self.current_lexeme.type in operations:
-                return newProp
-            else:
-                #print(self.current_lexeme)
-                return None
+            return self.recurseExp()
 
     def binOp(self, arg, operation):
         leftNode = arg()
