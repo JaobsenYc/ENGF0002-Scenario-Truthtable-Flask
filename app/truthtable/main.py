@@ -1,7 +1,7 @@
-from Lexer import Lexer
-from Parser import Parser
-from constants import *
-from truthTable import truthTable
+from app.truthtable.Lexer import Lexer
+from app.truthtable.Parser import Parser
+from app.truthtable.constants import *
+from app.truthtable.truthTable import truthTable
 
 parseTree = ""
 
@@ -49,13 +49,14 @@ def goodParse(st):
 
 def run():
     while True:
-        parseTree = getParse(input("Enter a proposition: "))
+        parseTree = getParse("(a /\ !b /\ c)")
         if parseTree is None:
             print("Invalid")
         else:
             truthGen = truthTable(parseTree)
             truthGen.generateTruth()
-
+            res = truthGen.getResults()
+            print(res)
 if __name__ == "__main__":
     #getParseDebug()
     run()
