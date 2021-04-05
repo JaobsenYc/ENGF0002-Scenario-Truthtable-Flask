@@ -1,8 +1,9 @@
 from app.truthtable.truthTable import *
 from app.truthtable.main import *
 
+ttg_api = Redprint("ttg")
 
-@book_api.route("/valid")
+@ttg_api.route("/valid")
 def valid():
     """
     Check validity of expreesion
@@ -13,7 +14,7 @@ def valid():
     return parseTree is not None
 
 
-@book_api.route("/truthtable")
+@ttg_api.route("/truthtable")
 def truthtable():
     """
     Return html format of truth table
@@ -29,7 +30,7 @@ def truthtable():
 import json
 
 
-@book_api.route("/truthtable/correct")
+@ttg_api.route("/truthtable/correct")
 def isCorrect():
     """
     Return boolean indicating correctness of submitted ans
