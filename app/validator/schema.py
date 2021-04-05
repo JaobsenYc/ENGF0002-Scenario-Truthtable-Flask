@@ -13,7 +13,7 @@ class AuthorizationSchema(BaseModel):
     Authorization: str
 
 
-class BookQuerySearchSchema(BaseModel):
+class quizQuerySearchSchema(BaseModel):
     q: Optional[str] = str()
 
 
@@ -63,14 +63,14 @@ class LogPageSchema(BasePageSchema):
     items: List[LogSchema]
 
 
-class BookInSchema(BaseModel):
+class quizInSchema(BaseModel):
     title: str
     author: str
     image: str
     summary: str
 
 
-class BookOutSchema(BaseModel):
+class quizOutSchema(BaseModel):
     id: int
     title: str
     author: str
@@ -78,8 +78,8 @@ class BookOutSchema(BaseModel):
     summary: str
 
 
-class BookSchemaList(BaseModel):
-    __root__: List[BookOutSchema]
+class quizSchemaList(BaseModel):
+    __root__: List[quizOutSchema]
 
 
 class Language(str, Enum):
