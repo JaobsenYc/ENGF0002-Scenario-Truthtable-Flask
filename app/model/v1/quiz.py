@@ -6,10 +6,10 @@
 from lin.interface import InfoCrud as Base
 from sqlalchemy import Column, Integer, String
 
-from app.exception.api import BookNotFound
+from app.exception.api import QuizNotFound
 
 
-class Book(Base):
+class Quiz(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(50), nullable=False)
     author = Column(String(30), default="未名")
