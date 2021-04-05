@@ -1,14 +1,14 @@
 from lin.exception import Duplicated, Failed, NotFound
 
 
-class quizNotFound(NotFound):
-    message = "书籍不存在"
+class QuizNotFound(NotFound):
+    message = "测试不存在"
     _config = False
 
 
-class quizDuplicated(Duplicated):
+class QuizDuplicated(Duplicated):
     code = 419
-    message = "图书已存在"
+    message = "测试已存在"
     _config = False
 
 

@@ -13,7 +13,7 @@ class AuthorizationSchema(BaseModel):
     Authorization: str
 
 
-class quizQuerySearchSchema(BaseModel):
+class QuizQuerySearchSchema(BaseModel):
     q: Optional[str] = str()
 
 
@@ -63,14 +63,14 @@ class LogPageSchema(BasePageSchema):
     items: List[LogSchema]
 
 
-class quizInSchema(BaseModel):
+class QuizInSchema(BaseModel):
     title: str
     author: str
     image: str
     summary: str
 
 
-class quizOutSchema(BaseModel):
+class QuizOutSchema(BaseModel):
     id: int
     title: str
     author: str
@@ -78,8 +78,8 @@ class quizOutSchema(BaseModel):
     summary: str
 
 
-class quizSchemaList(BaseModel):
-    __root__: List[quizOutSchema]
+class QuizSchemaList(BaseModel):
+    __root__: List[QuizOutSchema]
 
 
 class Language(str, Enum):

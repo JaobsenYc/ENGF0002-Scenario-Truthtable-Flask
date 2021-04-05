@@ -5,7 +5,7 @@
 
 from lin.db import db
 
-from app.model.v1.book import Book
+from app.model.v1.quiz import Book
 
 
 def fake():
