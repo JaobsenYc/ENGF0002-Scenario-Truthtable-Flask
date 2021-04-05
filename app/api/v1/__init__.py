@@ -10,5 +10,5 @@ from app.api.v1 import quiz
 
 def create_v1():
     bp_v1 = Blueprint("v1", __name__)
-    quiz.book_api.register(bp_v1)
+    quiz.quiz_api.register(bp_v1)
     return bp_v1

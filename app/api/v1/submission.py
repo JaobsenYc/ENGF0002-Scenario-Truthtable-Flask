@@ -23,7 +23,7 @@ from app.validator.schema import (
 )
 from lin.db import db
 
-quiz_api = Redprint("quiz")
+quiz_api = Redprint("submission")
 
 
 @quiz_api.route("/<int:id>")
@@ -69,7 +69,6 @@ def search():
 
 
 @quiz_api.route("", methods=["POST"])
-# @login_required
 # @api.validate(
 #     headers=AuthorizationSchema,
 #     json=QuizInSchema,
