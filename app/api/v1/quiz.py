@@ -1,6 +1,6 @@
 """
     a standard CRUD template of quiz
-    通过 图书 来实现一套标准的 CRUD 功能，供学习
+    通过 测试 来实现一套标准的 CRUD 功能，供学习
     :copyright: © 2020 by the Lin team.
     :license: MIT, see LICENSE for more details.
 """
@@ -26,13 +26,13 @@ quiz_api = Redprint("quiz")
 
 
 @quiz_api.route("/<int:id>")
-@api.validate(
-    resp=DocResponse(QuizNotFound, r=QuizOutSchema),
-    tags=["图书"],
-)
+# @api.validate(
+#     resp=DocResponse(QuizNotFound, r=QuizOutSchema),
+#     tags=["测试"],
+# )
 def get_quiz(id):
     """
-    获取id指定图书的信息
+    获取id指定测试的信息
     """
     quiz = Quiz.get(id=id)
     if quiz:
@@ -41,26 +41,26 @@ def get_quiz(id):
 
 
 @quiz_api.route("")
-@api.validate(
-    resp=DocResponse(r=QuizSchemaList),
-    tags=["图书"],
-)
+# @api.validate(
+#     resp=DocResponse(r=QuizSchemaList),
+#     tags=["测试"],
+# )
 def get_quizs():
     """
-    获取图书列表
+    获取测试列表
     """
     return Quiz.get(one=False)
 
 
 @quiz_api.route("/search")
-@api.validate(
-    query=QuizQuerySearchSchema,
-    resp=DocResponse(r=QuizSchemaList),
-    tags=["图书"],
-)
+# @api.validate(
+#     query=QuizQuerySearchSchema,
+#     resp=DocResponse(r=QuizSchemaList),
+#     tags=["测试"],
+# )
 def search():
     """
-    关键字搜索图书
+    关键字搜索测试
     """
     return Quiz.query.filter(
         Quiz.title.like("%" + g.q + "%"), Quiz.delete_time == None
@@ -69,15 +69,15 @@ def search():
 
 @quiz_api.route("", methods=["POST"])
 @login_required
-@api.validate(
-    headers=AuthorizationSchema,
-    json=QuizInSchema,
-    resp=DocResponse(Success(12)),
-    tags=["图书"],
-)
+# @api.validate(
+#     headers=AuthorizationSchema,
+#     json=QuizInSchema,
+#     resp=DocResponse(Success(12)),
+#     tags=["测试"],
+# )
 def create_quiz():
     """
-    创建图书
+    创建测试
     """
     quiz_schema = request.context.json
     Quiz.create(**quiz_schema.dict(), commit=True)
@@ -86,15 +86,15 @@ def create_quiz():
 
 @quiz_api.route("/<int:id>", methods=["PUT"])
 @login_required
-@api.validate(
-    headers=AuthorizationSchema,
-    json=QuizInSchema,
-    resp=DocResponse(Success(13)),
-    tags=["图书"],
-)
+# @api.validate(
+#     headers=AuthorizationSchema,
+#     json=QuizInSchema,
+#     resp=DocResponse(Success(13)),
+#     tags=["测试"],
+# )
 def update_quiz(id):
     """
-    更新图书信息
+    更新测试信息
     """
     quiz_schema = request.context.json
     quiz = Quiz.get(id=id)
@@ -109,20 +109,20 @@ def update_quiz(id):
 
 
 @quiz_api.route("/<int:id>", methods=["DELETE"])
-@permission_meta(name="删除图书", module="图书")
-@group_required
-@api.validate(
-    headers=AuthorizationSchema,
-    resp=DocResponse(QuizNotFound, Success(14)),
-    tags=["图书"],
-)
+# @permission_meta(name="删除测试", module="测试")
+# @group_required
+# @api.validate(
+#     headers=AuthorizationSchema,
+#     resp=DocResponse(QuizNotFound, Success(14)),
+#     tags=["测试"],
+# )
 def delete_quiz(id):
     """
-    传入id删除对应图书
+    传入id删除对应测试
     """
     quiz = Quiz.get(id=id)
     if quiz:
-        # 删除图书，软删除
+        # 删除测试，软删除
         quiz.delete(commit=True)
         return Success(14)
     raise QuizNotFound
