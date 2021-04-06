@@ -1,5 +1,10 @@
 from app.truthtable.truthTable import *
 from app.truthtable.main import *
+from flask import g, request, jsonify
+
+from lin.redprint import Redprint
+
+from app.exception.api import QuizNotFound, StrIndexError
 
 ttg_api = Redprint("ttg")
 
@@ -24,7 +29,7 @@ def truthtable():
     truthGen = truthTable(parseTree)
     res = truthGen.generateTruth()
 
-    return
+    return res
 
 
 import json
