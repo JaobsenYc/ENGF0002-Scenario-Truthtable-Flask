@@ -56,7 +56,7 @@ def run():
             truthGen = truthTable(parseTree)
             truthGen.generateTruth()
             res = truthGen.getResults()
-            print(res)
+            print(truthGen.generateTruth())
 if __name__ == "__main__":
     #getParseDebug()
     run()

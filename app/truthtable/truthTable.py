@@ -1,6 +1,6 @@
 import ttg
 import prettytable
-
+import pandas
 
 class truthTable:
     def __init__(self, AST):
@@ -26,11 +26,21 @@ class truthTable:
             if element not in self.operations and element not in self.propVar:
                 self.propVar.append(element)
 
-    def generateTruth(self):
+    def generateTruthHtml(self):
         # print(ttg.Truths(['p','q','r'],['(p or (~q)) => r'],ints=False))
         # print(ttg.Truths(self.propVar, self.proposition, ints=False))
         truth = ttg.Truths(self.propVar, self.proposition, ints=False)
+
         ans = truth.as_tabulate(index=False, table_format='html')
+
+        return ans
+
+    def generateTruthJson(self):
+        # print(ttg.Truths(['p','q','r'],['(p or (~q)) => r'],ints=False))
+        # print(ttg.Truths(self.propVar, self.proposition, ints=False))
+        truth = ttg.Truths(self.propVar, self.proposition, ints=False)
+
+        ans = pandas.DataFrame.to_json(truth.as_pandas())
 
         return ans
 

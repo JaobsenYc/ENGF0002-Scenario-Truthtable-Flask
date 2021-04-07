@@ -19,18 +19,35 @@ def valid():
     return parseTree is not None
 
 
-@ttg_api.route("/truthtable")
-def truthtable():
+@ttg_api.route("/truthtable_html")
+def truthtable_html():
     """
     Return html format of truth table
     """
+    # expression = request.args.get("expression")
+    # parseTree = getParse(expression)
+    # truthGen = truthTable(parseTree)
+    # res = truthGen.generateTruth()
     expression = request.args.get("expression")
     parseTree = getParse(expression)
     truthGen = truthTable(parseTree)
-    res = truthGen.generateTruth()
-
+    res = truthGen.generateTruthHtml()
     return res
 
+@ttg_api.route("/truthtable_json")
+def truthtable_json():
+    """
+    Return html format of truth table
+    """
+    # expression = request.args.get("expression")
+    # parseTree = getParse(expression)
+    # truthGen = truthTable(parseTree)
+    # res = truthGen.generateTruth()
+    expression = request.args.get("expression")
+    parseTree = getParse(expression)
+    truthGen = truthTable(parseTree)
+    res = truthGen.generateTruthJson()
+    return res
 
 import json
 
