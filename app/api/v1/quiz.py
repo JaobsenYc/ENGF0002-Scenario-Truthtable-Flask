@@ -35,7 +35,7 @@ def get_quiz(id):
     """
     获取id指定测试的信息
     """
-    quiz = Quiz.get(id=id)
+    quiz = Quiz.get(id=int(id))
     if quiz:
         return quiz
     raise QuizNotFound
