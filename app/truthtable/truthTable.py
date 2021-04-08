@@ -2,6 +2,7 @@ import ttg
 import prettytable
 import pandas
 
+
 class truthTable:
     def __init__(self, AST):
         self.AST = AST
@@ -41,6 +42,19 @@ class truthTable:
         truth = ttg.Truths(self.propVar, self.proposition, ints=False)
 
         ans = pandas.DataFrame.to_json(truth.as_pandas())
+
+        return ans
+
+    def generateTruthJson_quiz(self):
+        # print(ttg.Truths(['p','q','r'],['(p or (~q)) => r'],ints=False))
+        # print(ttg.Truths(self.propVar, self.proposition, ints=False))
+        truth = ttg.Truths(self.propVar, self.proposition, ints=False)
+
+        ans = truth.as_pandas()
+        ans.drop(columns=ans.columns[-1],
+                 axis=1,
+                 inplace=True)
+        ans = pandas.DataFrame.to_json(ans)
 
         return ans
 

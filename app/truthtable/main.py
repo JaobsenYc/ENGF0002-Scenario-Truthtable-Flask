@@ -5,14 +5,16 @@ from app.truthtable.truthTable import truthTable
 
 parseTree = ""
 
+
 def output(i):
     if i is None:
         print("Invalid input")
     else:
         print(i)
 
-def getParse(text,debug = False):
-    text= text.upper()
+
+def getParse(text, debug=False):
+    text = text.upper()
     lexer = Lexer(text)
     tokenstream = lexer.make_token()
     if tokenstream[0] != Invalid_Input:
@@ -24,22 +26,26 @@ def getParse(text,debug = False):
     else:
         return None
 
+
 def getParseRun():
     while True:
         text = input("Enter a proposition: ")
         output(getParse(text))
 
+
 def getParseDebug():
     t = "(a /\ !b /\ c)"
     print(t)
-    a = getParse(t,True)
+    a = getParse(t, True)
     output(a)
+
 
 def goodParse(st):
     parseTree = getParse(st)
     if parseTree is None:
         return False
     return True
+
 
 # def isCorrect(ans):
 #     res = truthTable.getResults()
@@ -48,15 +54,16 @@ def goodParse(st):
 #     return False
 
 def run():
-    while True:
-        parseTree = getParse("(a /\ !b /\ c)")
-        if parseTree is None:
-            print("Invalid")
-        else:
-            truthGen = truthTable(parseTree)
-            truthGen.generateTruth()
-            res = truthGen.getResults()
-            print(truthGen.generateTruth())
+    parseTree = getParse("(a /\ !b /\ c)")
+    if parseTree is None:
+        print("Invalid")
+    else:
+        truthGen = truthTable(parseTree)
+        # truthGen.generateTruthJson_quiz()
+        # res = truthGen.getResults()
+        print(truthGen.generateTruthJson_quiz())
+
+
 if __name__ == "__main__":
-    #getParseDebug()
+    # getParseDebug()
     run()

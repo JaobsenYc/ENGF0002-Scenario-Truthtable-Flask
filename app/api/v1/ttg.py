@@ -44,10 +44,18 @@ def truthtable_json():
     # truthGen = truthTable(parseTree)
     # res = truthGen.generateTruth()
     expression = request.args.get("expression")
-    parseTree = getParse(expression)
-    truthGen = truthTable(parseTree)
-    res = truthGen.generateTruthJson()
-    return res
+    quiz = request.args.get("quiz")
+    print(quiz)
+    if quiz is not None:
+        parseTree = getParse(expression)
+        truthGen = truthTable(parseTree)
+        res = truthGen.generateTruthJson_quiz()
+        return res
+    else:
+        parseTree = getParse(expression)
+        truthGen = truthTable(parseTree)
+        res = truthGen.generateTruthJson()
+        return res
 
 import json
 
