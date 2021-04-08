@@ -14,4 +14,5 @@ def create_v1():
     quiz.quiz_api.register(bp_v1)
     ttg.ttg_api.register(bp_v1)
     truthtable.truthtable_api.register(bp_v1)
+    submission.submission_api.register(bp_v1)
     return bp_v1
