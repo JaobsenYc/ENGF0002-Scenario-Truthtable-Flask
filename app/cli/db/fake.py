@@ -13,5 +13,8 @@ def fake():
         # 添加书籍
         book1 = Quiz()
         book1.expression = "(a /\ !b /\ c)"
+        book1.average_grade = 80
+        book1.already_submission = 100
+        book1.submission = "1/100"
         db.session.add(book1)
 

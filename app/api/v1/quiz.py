@@ -83,7 +83,9 @@ def create_quiz():
     with db.auto_commit():
         # 添加书籍
         book1 = Quiz()
-        book1.expression = request.args.get("expression")
+        book1.expression = request.json.get("expression")
+        book1.average_grade = 0
+        book1.submission = "0/100"
         print(book1.expression)
         db.session.add(book1)
     # Quiz.create(book1, commit=True)
@@ -102,12 +104,14 @@ def update_quiz(id):
     """
     更新测试信息
     """
-    quiz_schema = request.context.json
+
+    expression = request.json.get("expression")
+    print(request.json)
     quiz = Quiz.get(id=id)
     if quiz:
         quiz.update(
             id=id,
-            **quiz_schema.dict(),
+            expression=expression,
             commit=True,
         )
         return Success(13)
