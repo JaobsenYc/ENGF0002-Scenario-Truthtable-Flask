@@ -1,8 +1,8 @@
 """
     a standard CRUD template of quiz
-    通过 测试 来实现一套标准的 CRUD 功能，供学习
     :copyright: © 2020 by the Lin team.
     :license: MIT, see LICENSE for more details.
+    :Copyright (c) 2021 Chen Yang, Siqi Zhu,Jeffrey Li,Minyi Lei
 """
 from app.model.lin import User as LinUser
 from flask import g, request, jsonify
@@ -20,7 +20,7 @@ quiz_api = Redprint("quiz")
 @quiz_api.route("/<int:id>")
 def get_quiz(id):
     """
-    获取id指定测试的信息
+    get quiz by querying id
     """
     quiz = Quiz.get(id=id)
     if quiz:
@@ -43,7 +43,7 @@ def search():
 @quiz_api.route("", methods=["POST"])
 def create_quiz():
     """
-    创建测试
+    create quiz
     """
     all_stu = LinUser.count_all_student()
     with db.auto_commit():
@@ -61,7 +61,7 @@ def create_quiz():
 @login_required
 def update_quiz(id):
     """
-    更新测试信息
+    update quiz info
     """
 
     expression = request.json.get("expression")
@@ -78,12 +78,6 @@ def update_quiz(id):
 
 
 @quiz_api.route("/submission", methods=["GET"])
-# @api.validate(
-#     headers=AuthorizationSchema,
-#     json=QuizInSchema,
-#     resp=DocResponse(Success(13)),
-#     tags=["测试"],
-# )
 def update_submission():
     id = request.args.get("id")
     score = float(request.args.get("score"))/100

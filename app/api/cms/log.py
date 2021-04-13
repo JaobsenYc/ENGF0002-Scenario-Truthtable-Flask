@@ -1,3 +1,11 @@
+"""
+    :copyright: © 2020 by the Lin team.
+    :Copyright (c) 2021 Chen Yang, Siqi Zhu,Jeffrey Li,Minyi Lei
+
+    :license: MIT, see LICENSE for more details.
+"""
+
+
 import math
 
 from flask import g
@@ -31,9 +39,6 @@ log_api = Redprint("log")
     tags=["日志"],
 )
 def get_logs():
-    """
-    日志浏览查询（人员，时间, 关键字），分页展示
-    """
     if g.keyword:
         logs = Log.query.filter(Log.message.like(f"%{g.keyword}%"))
     else:
@@ -63,9 +68,6 @@ def get_logs():
     tags=["日志"],
 )
 def get_users_for_log():
-    """
-    获取所有记录行为日志的用户名
-    """
     usernames = (
         db.session.query(Log.username)
         .filter_by(soft=False)

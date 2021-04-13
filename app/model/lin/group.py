@@ -9,7 +9,7 @@ class Group(LinGroup):
     @classmethod
     def select_by_user_id(cls, user_id) -> list:
         """
-        根据用户Id，通过User-Group关联表，获取所属用户组对象列表
+        query data by inner joint user id
         """
         query = (
             db.session.query(manager.user_group_model.group_id)

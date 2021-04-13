@@ -73,7 +73,6 @@ class Parser:
         elif self.current_lexeme.type in operations:
             return newProp
         else:
-            # print(self.current_lexeme)
             return None
 
     def Variable(self):
@@ -94,13 +93,10 @@ class Parser:
 
     def binOp(self, arg, operation):
         leftNode = arg()
-        #print("Left Node: ",leftNode)
         while self.current_lexeme.type in operation:
             op = self.current_lexeme
-            #print("Operation:", op)
             self.nextLex()
             rightNode = arg()
-            #print("Right node: ",rightNode)
             leftNode = BinNode(leftNode, rightNode, op)
         return leftNode
 
@@ -111,7 +107,6 @@ class Parser:
         return self.binOp(self.Conjunction, DISJ)
 
     def proposition(self):
-        #Implications
         return self.binOp(self.Disjunction, (IMPL, BIIMPL))
 
     def parse(self):

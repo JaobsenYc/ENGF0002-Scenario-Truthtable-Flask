@@ -1,6 +1,5 @@
 """
-  消息码配置文件
-  格式：消息码 -> 消息
+  messgae code -> message
 """
 
 MESSAGE = {

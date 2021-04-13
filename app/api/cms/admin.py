@@ -2,6 +2,7 @@
     admin apis
     ~~~~~~~~~
     :copyright: © 2020 by the Lin team.
+    :Copyright (c) 2021 Chen Yang, Siqi Zhu,Jeffrey Li,Minyi Lei
     :license: MIT, see LICENSE for more details.
 """
 import math
@@ -43,8 +44,7 @@ def permissions():
 def get_admin_users():
     start, count = paginate()
     group_id = request.args.get("group_id")
-    # 根据筛选条件和分页，获取 用户id 与 用户组id 的一对多 数据
-    # 过滤root 分组
+    # filter root group
     query_root_group_id = db.session.query(manager.group_model.id).filter(
         manager.group_model.level == GroupLevelEnum.ROOT.value
     )
@@ -63,8 +63,7 @@ def get_admin_users():
         .all()
     )
 
-    # 获取 符合条件的 用户id 数量
-    # 过滤root 分组
+   # filter root group
     _total = db.session.query(
         func.count(func.distinct(manager.user_group_model.user_id))
     ).filter(~manager.user_group_model.group_id.in_(query_root_group_id))
@@ -72,7 +71,7 @@ def get_admin_users():
         _total = _total.filter(manager.user_group_model.group_id == group_id)
     total = _total.scalar()
 
-    # 获取本次需要返回的用户的数据
+    # get user info
     user_ids = [x.user_id for x in user_groups_list]
     users = manager.user_model.query.filter(manager.user_model.id.in_(user_ids)).all()
     user_dict = dict()
@@ -81,14 +80,11 @@ def get_admin_users():
         user._fields.append("groups")
         user_dict[user.id] = user
 
-    # 使用用户组来过滤，则不需要补全用户组信息
     if not group_id:
-        # 拿到本次请求返回用户的所有 用户组 id List
         group_ids = [
             int(i)
             for i in set().union(*(x.group_ids.split(",") for x in user_groups_list))
         ]
-        # 获取本次需要返回的用户组的数据
         groups = manager.group_model.query.filter(
             manager.group_model.id.in_(group_ids)
         ).all()
@@ -97,7 +93,6 @@ def get_admin_users():
             group_dict[group.id] = group
         items = []
 
-        # 根据 用户与用户组 一对多的关系， 补全用户的用户组详细信息
         for user_id, group_ids in user_groups_list:
             group_id_list = [int(gid) for gid in group_ids.split(",")]
             groups = [group_dict[group_id] for group_id in group_id_list]
@@ -140,7 +135,7 @@ def delete_user(uid):
     if user is None:
         raise NotFound("用户不存在")
     groups = manager.group_model.select_by_user_id(uid)
-    # 超级管理员分组的用户仅有一个分组
+    # only one root group
     if groups[0].level == GroupLevelEnum.ROOT.value:
         raise Forbidden("无法删除此用户")
     with db.auto_commit():
@@ -167,13 +162,11 @@ def update_user(uid):
     with db.auto_commit():
         user.email = form.email.data
         group_ids = form.group_ids.data
-        # 清空原来的所有关联关系
+        # clear joint data
         manager.user_group_model.query.filter_by(user_id=user.id).delete(
             synchronize_session=False
         )
-        # 根据传入分组ids 新增关联记录
         user_group_list = list()
-        # 如果没传分组数据，则将其设定为 guest 分组
         if len(group_ids) == 0:
             group_ids = [manager.group_model.get(level=GroupLevelEnum.GUEST.value).id]
         for group_id in group_ids:
@@ -206,7 +199,7 @@ def get_admin_groups():
         setattr(group, "permissions", permissions)
         group._fields.append("permissions")
 
-    # root分组隐藏不显示
+    # hide root group
     total = (
         db.session.query(func.count(manager.group_model.id))
         .filter(
@@ -255,7 +248,7 @@ def get_group(gid):
 
 @admin_api.route("/group", methods=["POST"])
 @permission_meta(name="新建分组", module="管理员", mount=False)
-@Logger(template="管理员新建了一个分组")  # 记录日志
+@Logger(template="管理员新建了一个分组")  # add log
 @admin_required
 def create_group():
     form = NewGroup().validate_for_api()
@@ -292,7 +285,7 @@ def update_group(gid):
 
 @admin_api.route("/group/<int:gid>", methods=["DELETE"])
 @permission_meta(name="删除一个分组", module="管理员", mount=False)
-@Logger(template="管理员删除一个分组")  # 记录日志
+@Logger(template="管理员删除一个分组")  # add log
 @admin_required
 def delete_group(gid):
     exist = manager.group_model.get(id=gid)
@@ -305,11 +298,9 @@ def delete_group(gid):
     if manager.user_model.select_page_by_group_id(gid, root_group.id):
         raise Forbidden("分组下存在用户，不可删除")
     with db.auto_commit():
-        # 删除group id 对应的关联记录
         manager.group_permission_model.query.filter_by(group_id=gid).delete(
             synchronize_session=False
         )
-        # 删除group
         exist.delete()
     return Success("删除分组成功")
 

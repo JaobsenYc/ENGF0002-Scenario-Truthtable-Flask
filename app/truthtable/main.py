@@ -46,24 +46,14 @@ def goodParse(st):
         return False
     return True
 
-
-# def isCorrect(ans):
-#     res = truthTable.getResults()
-#     if res == ans:
-#         return True
-#     return False
-
 def run():
     parseTree = getParse("(a /\ !b /\ c)")
     if parseTree is None:
         print("Invalid")
     else:
         truthGen = truthTable(parseTree)
-        # truthGen.generateTruthJson_quiz()
-        # res = truthGen.getResults()
         print(truthGen.generateTruthJson_quiz())
 
 
 if __name__ == "__main__":
-    # getParseDebug()
     run()

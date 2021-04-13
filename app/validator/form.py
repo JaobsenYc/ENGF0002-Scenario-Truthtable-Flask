@@ -1,5 +1,6 @@
 """
     :copyright: © 2020 by the Lin team.
+    :Copyright (c) 2021 Chen Yang, Siqi Zhu,Jeffrey Li,Minyi Lei
     :license: MIT, see LICENSE for more details.
 """
 import re
@@ -11,7 +12,7 @@ from lin.form import Form
 from wtforms import DateTimeField, FieldList, IntegerField, PasswordField, StringField
 from wtforms.validators import DataRequired, EqualTo, NumberRange, Regexp, length
 
-# 注册校验
+# registration check
 
 
 class EmailForm(Form):
@@ -60,7 +61,7 @@ class RegisterForm(EmailForm):
                 raise ParameterError("分组不存在")
 
 
-# 登录校验
+# login check
 
 
 class LoginForm(Form):
@@ -68,7 +69,7 @@ class LoginForm(Form):
     password = PasswordField("密码", validators=[DataRequired(message="密码不可为空")])
 
 
-# 重置密码校验
+# reset password check
 class ResetPasswordForm(Form):
     new_password = PasswordField(
         "新密码",
@@ -83,18 +84,16 @@ class ResetPasswordForm(Form):
     )
 
 
-# 更改密码校验
+# change password check
 class ChangePasswordForm(ResetPasswordForm):
     old_password = PasswordField("原密码", validators=[DataRequired(message="不可为空")])
 
 
-# 管理员创建分组
+# create new group
 class NewGroup(Form):
-    # 分组name
     name = StringField(validators=[DataRequired(message="请输入分组名称")])
-    # 非必须
     info = StringField()
-    # 必填，分组的权限
+    # group permission
     permission_ids = FieldList(
         IntegerField(
             "权限id",
@@ -111,16 +110,14 @@ class NewGroup(Form):
             raise ParameterError("权限不存在")
 
 
-# 管理员更新分组
+# update group info
 class UpdateGroup(Form):
-    # 分组name
     name = StringField(validators=[DataRequired(message="请输入分组名称")])
-    # 非必须
     info = StringField()
 
 
 class DispatchAuths(Form):
-    # 为用户分配的权限
+    # assign user permission
     group_id = IntegerField(
         "分组id",
         validators=[
@@ -135,7 +132,7 @@ class DispatchAuths(Form):
 
 
 class DispatchAuth(Form):
-    # 为用户分配的权限
+    # assign user permission
     group_id = IntegerField(
         "分组id",
         validators=[
@@ -148,7 +145,7 @@ class DispatchAuth(Form):
     )
 
 
-# 批量删除权限
+# batch remove permissions
 class RemoveAuths(Form):
     group_id = IntegerField(
         "分组id",
@@ -162,9 +159,7 @@ class RemoveAuths(Form):
     )
 
 
-# 日志查找范围校验
 class LogFindForm(Form):
-    # name可选，若无则表示全部
     name = StringField()
     # 2018-11-01 09:39:35
     start = DateTimeField(validators=[])
@@ -196,7 +191,7 @@ class EventsForm(Form):
     events = FieldList(StringField(validators=[DataRequired(message="请输入events字段")]))
 
 
-# 更新用户邮箱和昵称
+# update user email
 class UpdateInfoForm(EmailForm):
     nickname = StringField()
     avatar = StringField()
@@ -208,7 +203,7 @@ class UpdateInfoForm(EmailForm):
                 raise ParameterError("昵称长度必须在2~10之间")
 
 
-# 更新用户信息
+# update user info
 class UpdateUserInfoForm(EmailForm):
     group_ids = FieldList(
         IntegerField(
@@ -227,7 +222,7 @@ class UpdateUserInfoForm(EmailForm):
 
 
 class BookSearchForm(Form):
-    q = StringField(validators=[DataRequired(message="必须传入搜索关键字")])  # 前端的请求参数中必须携带`q`
+    q = StringField(validators=[DataRequired(message="必须传入搜索关键字")])
 
 
 class CreateOrUpdateBookForm(Form):

@@ -28,8 +28,6 @@ class truthTable:
                 self.propVar.append(element)
 
     def generateTruthHtml(self):
-        # print(ttg.Truths(['p','q','r'],['(p or (~q)) => r'],ints=False))
-        # print(ttg.Truths(self.propVar, self.proposition, ints=False))
         truth = ttg.Truths(self.propVar, self.proposition, ints=False)
 
         ans = truth.as_tabulate(index=False, table_format='html')
@@ -37,8 +35,6 @@ class truthTable:
         return ans
 
     def generateTruthJson(self):
-        # print(ttg.Truths(['p','q','r'],['(p or (~q)) => r'],ints=False))
-        # print(ttg.Truths(self.propVar, self.proposition, ints=False))
         truth = ttg.Truths(self.propVar, self.proposition, ints=False)
 
         ans = pandas.DataFrame.to_json(truth.as_pandas())
@@ -46,8 +42,6 @@ class truthTable:
         return ans
 
     def generateTruthJson_quiz(self):
-        # print(ttg.Truths(['p','q','r'],['(p or (~q)) => r'],ints=False))
-        # print(ttg.Truths(self.propVar, self.proposition, ints=False))
         truth = ttg.Truths(self.propVar, self.proposition, ints=False)
 
         ans = truth.as_pandas()

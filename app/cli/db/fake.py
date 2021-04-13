@@ -1,5 +1,7 @@
 """
+    a standard CRUD template of quiz
     :copyright: © 2020 by the Lin team.
+    :Copyright (c) 2021 Chen Yang, Siqi Zhu,Jeffrey Li,Minyi Lei
     :license: MIT, see LICENSE for more details.
 """
 
@@ -10,7 +12,7 @@ from app.model.v1.quiz import Quiz
 
 def fake():
     with db.auto_commit():
-        # 添加书籍
+        # add a book
         book1 = Quiz()
         book1.expression = "(a /\ !b /\ c)"
         book1.average_grade = 80

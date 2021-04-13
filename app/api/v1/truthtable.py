@@ -1,3 +1,8 @@
+"""
+    :Copyright (c) 2021 Chen Yang, Siqi Zhu,Jeffrey Li,Minyi Lei
+    :license: MIT, see LICENSE for more details.
+"""
+
 from flask import g, request, jsonify
 from lin import permission_meta
 from lin.apidoc import DocResponse, api

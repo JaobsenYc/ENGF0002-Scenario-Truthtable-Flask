@@ -10,5 +10,3 @@ worker_class = "gevent"
 daemon = False
 workers = multiprocessing.cpu_count() * 2 + 1
 debug = False
-# pidfile = "/var/run/gunicorn.pid"
-# accesslog = "/var/log/gunicorn.log"

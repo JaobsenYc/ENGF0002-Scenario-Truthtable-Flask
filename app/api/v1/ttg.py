@@ -1,3 +1,8 @@
+"""
+    :Copyright (c) 2021 Chen Yang, Siqi Zhu,Jeffrey Li,Minyi Lei
+    :license: MIT, see LICENSE for more details.
+"""
+
 from app.truthtable.truthTable import *
 from app.truthtable.main import *
 from flask import g, request, jsonify

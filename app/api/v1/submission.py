@@ -1,7 +1,7 @@
 """
     a standard CRUD template of quiz
-    通过 测试 来实现一套标准的 CRUD 功能，供学习
     :copyright: © 2020 by the Lin team.
+    :Copyright (c) 2021 Chen Yang, Siqi Zhu,Jeffrey Li,Minyi Lei
     :license: MIT, see LICENSE for more details.
 """
 
@@ -33,13 +33,9 @@ submission_api = Redprint("submission")
 
 
 @submission_api.route("/<int:id>")
-# @api.validate(
-#     resp=DocResponse(QuizNotFound, r=QuizOutSchema),
-#     tags=["测试"],
-# )
 def get_quiz(id):
     """
-    获取id指定测试的信息
+    get quiz by querying id
     """
     submission = Submission.get(id=id)
     if submission:
@@ -48,13 +44,9 @@ def get_quiz(id):
 
 
 @submission_api.route("")
-# @api.validate(
-#     resp=DocResponse(r=QuizSchemaList),
-#     tags=["测试"],
-# )
 def get_quizs():
     """
-    获取测试列表
+    get quiz list
     """
     return Submission.get(one=False)
 
@@ -66,49 +58,33 @@ def get_quizs():
 #     tags=["测试"],
 # )
 def search():
-    """
-    关键字搜索测试
-    """
     return Submission.query.filter(
         Submission.title.like("%" + g.q + "%"), Submission.delete_time == None
     ).all()
 
 
 @submission_api.route("", methods=["POST"])
-# @api.validate(
-#     headers=AuthorizationSchema,
-#     json=QuizInSchema,
-#     resp=DocResponse(Success(12)),
-#     tags=["测试"],
-# )
 @login_required
 def create_quiz():
     """
-    创建测试
+    create quiz
     """
     user = get_current_user()
     with db.auto_commit():
-        # 添加书籍
+        # add a book
         book1 = Submission()
         book1.expression = request.args.get("expression")
         book1.user_id=user.id
         print(book1.expression)
         db.session.add(book1)
-    # Submission.create(book1, commit=True)
     return Success(12)
 
 
 @submission_api.route("/<int:id>", methods=["PUT"])
 @login_required
-# @api.validate(
-#     headers=AuthorizationSchema,
-#     json=QuizInSchema,
-#     resp=DocResponse(Success(13)),
-#     tags=["测试"],
-# )
 def update_quiz(id):
     """
-    更新测试信息
+    update quiz info
     """
     quiz_schema = request.context.json
     quiz = Submission.get(id=id)
@@ -123,20 +99,13 @@ def update_quiz(id):
 
 
 @submission_api.route("/<int:id>", methods=["DELETE"])
-# @permission_meta(name="删除测试", module="测试")
-# @group_required
-# @api.validate(
-#     headers=AuthorizationSchema,
-#     resp=DocResponse(QuizNotFound, Success(14)),
-#     tags=["测试"],
-# )
 def delete_quiz(id):
     """
-    传入id删除对应测试
+    delete quiz by using id
     """
     submission = Submission.get(id=id)
     if submission:
-        # 删除测试，软删除
+        # soft delete
         submission.delete(commit=True)
         return Success(14)
     raise QuizNotFound

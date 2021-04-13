@@ -1,4 +1,4 @@
-# 本地文件上传相关配置模版
+# file upload settings
 FILE = {
     "STORE_DIR": "assets",
     "SINGLE_LIMIT": 1024 * 1024 * 2,

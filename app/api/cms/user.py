@@ -2,6 +2,7 @@
     user apis
     ~~~~~~~~~
     :copyright: © 2020 by the Lin team.
+    :Copyright (c) 2021 Chen Yang, Siqi Zhu,Jeffrey Li,Minyi Lei
     :license: MIT, see LICENSE for more details.
 """
 from operator import and_
@@ -34,7 +35,7 @@ user_api = Redprint("user")
 
 @user_api.route("/register", methods=["POST"])
 @permission_meta(name="注册", module="用户", mount=False)
-@Logger(template="管理员新建了一个用户")  # 记录日志
+@Logger(template="管理员新建了一个用户") 
 @admin_required
 def register():
     form = RegisterForm().validate_for_api()
@@ -52,7 +53,6 @@ def register():
 def login():
     form = LoginForm().validate_for_api()
     user = manager.user_model.verify(form.username.data, form.password.data)
-    # 用户未登录，此处不能用装饰器记录日志
     Log.create_log(
         message=f"{user.username}登陆成功获取了令牌",
         user_id=user.id,
@@ -93,7 +93,7 @@ def update():
 
 @user_api.route("/change_password", methods=["PUT"])
 @permission_meta(name="修改密码", module="用户", mount=False)
-@Logger(template="{user.username}修改了自己的密码")  # 记录日志
+@Logger(template="{user.username}修改了自己的密码")
 @login_required
 def change_password():
     form = ChangePasswordForm().validate_for_api()
@@ -161,7 +161,7 @@ def _register_user(form: RegisterForm):
         db.session.flush()
         user.password = form.password.data
         group_ids = form.group_ids.data
-        # 如果没传分组数据，则将其设定为 id 2 的 guest 分组
+        # set as default guest group, assign id 2
         if len(group_ids) == 0:
             group_ids = [2]
         for group_id in group_ids:
