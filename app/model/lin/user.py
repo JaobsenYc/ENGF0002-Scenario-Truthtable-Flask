@@ -7,6 +7,16 @@ class User(LinUser):
         self._exclude = ["delete_time", "create_time", "update_time"]
 
     @classmethod
+    def count_all_student(cls) -> int:
+        result = db.session.query(func.count(manager.user_group_model.user_id)).filter(
+            manager.user_group_model.group_id == 3
+        )
+        count = result.scalar()
+        return count
+
+
+
+    @classmethod
     def count_by_username(cls, username) -> int:
         result = db.session.query(func.count(cls.id)).filter(
             cls.username == username, cls.delete_time == None

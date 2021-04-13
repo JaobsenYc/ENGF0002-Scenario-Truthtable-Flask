@@ -4,13 +4,13 @@
     :copyright: © 2020 by the Lin team.
     :license: MIT, see LICENSE for more details.
 """
-
+from app.model.lin import User as LinUser
 from flask import g, request, jsonify
 from lin.exception import Success
 from lin.jwt import group_required, login_required
 from lin.redprint import Redprint
-
-from app.exception.api import QuizNotFound
+from app.model.lin.user import User
+from app.exception.api import QuizNotFound, StrIndexError
 from app.model.v1.quiz import Quiz
 from lin.db import db
 
@@ -22,9 +22,9 @@ def get_quiz(id):
     """
     获取id指定测试的信息
     """
-    quiz = Quiz.get(id=int(id))
+    quiz = Quiz.get(id=id)
     if quiz:
-        return quiz
+        return quiz.expression
     raise QuizNotFound
 
 
@@ -42,11 +42,16 @@ def search():
 
 @quiz_api.route("", methods=["POST"])
 def create_quiz():
+    """
+    创建测试
+    """
+    all_stu = LinUser.count_all_student()
     with db.auto_commit():
         book1 = Quiz()
         book1.expression = request.json.get("expression")
         book1.average_grade = 0
-        book1.submission = "0/100"
+        book1.already_submission=0
+        book1.submission = "0/"+ str(all_stu)
         print(book1.expression)
         db.session.add(book1)
     return Success(12)
@@ -66,6 +71,32 @@ def update_quiz(id):
         quiz.update(
             id=id,
             expression=expression,
+            commit=True,
+        )
+        return Success(13)
+    raise QuizNotFound
+
+
+@quiz_api.route("/submission", methods=["GET"])
+# @api.validate(
+#     headers=AuthorizationSchema,
+#     json=QuizInSchema,
+#     resp=DocResponse(Success(13)),
+#     tags=["测试"],
+# )
+def update_submission():
+    id = request.args.get("id")
+    score = float(request.args.get("score"))/100
+    quiz = Quiz.get(id=id)
+    al_sub = Quiz.get(id=id).already_submission
+    av_grade = Quiz.get(id=id).average_grade
+    all_stu = LinUser.count_all_student()
+    if quiz:
+        quiz.update(
+            id=id,
+            average_grade=(al_sub * av_grade + score) / (al_sub + 1),
+            already_submission=al_sub + 1,
+            submission=str(al_sub + 1) + "/" + str(all_stu),
             commit=True,
         )
         return Success(13)

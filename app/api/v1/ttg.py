@@ -8,6 +8,7 @@ from app.exception.api import QuizNotFound, StrIndexError
 
 ttg_api = Redprint("ttg")
 
+
 @ttg_api.route("/valid")
 def valid():
     """
@@ -32,7 +33,9 @@ def truthtable_html():
     parseTree = getParse(expression)
     truthGen = truthTable(parseTree)
     res = truthGen.generateTruthHtml()
+
     return res
+
 
 @ttg_api.route("/truthtable_json")
 def truthtable_json():
@@ -57,6 +60,7 @@ def truthtable_json():
         res = truthGen.generateTruthJson()
         return res
 
+
 import json
 
 
@@ -69,7 +73,7 @@ def isCorrect():
 
     expression = request.args.get("expression")
     ans = request.args.get("ans")
-
+    quizid = request.args.get("quizid")
     parseTree = getParse(expression)
     truthGen = truthTable(parseTree)
 

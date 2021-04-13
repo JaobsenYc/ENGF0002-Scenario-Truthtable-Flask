@@ -134,9 +134,9 @@ def delete_quiz(id):
     """
     传入id删除对应测试
     """
-    quiz = Submission.get(id=id)
-    if quiz:
+    submission = Submission.get(id=id)
+    if submission:
         # 删除测试，软删除
-        quiz.delete(commit=True)
+        submission.delete(commit=True)
         return Success(14)
     raise QuizNotFound
