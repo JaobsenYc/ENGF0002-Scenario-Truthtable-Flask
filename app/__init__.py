@@ -53,7 +53,7 @@ def set_global_config(**kwargs):
 
 def create_app(register_all=True, **kwargs):
     load_dotenv(".flaskenv")
-    app = Flask(__name__, template_folder='../dist',static_folder='../dist/static')
+    app = Flask(__name__, template_folder='../dist',static_folder='../dist/index/assets')
     load_app_config(app)
     if register_all:
         from lin import Lin

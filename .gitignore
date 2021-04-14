@@ -6,7 +6,7 @@
 .vscode
 *.pytest_cache/
 *.pyc
-assets
+
 logs
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
@@ -26,7 +26,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
+
 downloads/
 eggs/
 .eggs/

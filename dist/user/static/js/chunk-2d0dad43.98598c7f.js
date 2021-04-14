@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0dad43"],{"6cee":function(n,p,c){n.exports=c.p+"static/img/Minyi.c257eb06.jpg"}}]);

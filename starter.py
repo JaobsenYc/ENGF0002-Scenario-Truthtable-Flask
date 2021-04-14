@@ -32,8 +32,18 @@ if app.config.get("ENV") != "production":
     @app.route('/', defaults={'path': ''})
     @app.route('/')
     def catch_all():
-        return render_template("index.html")
+        return render_template("/index/index.html")
 
+
+    @app.route('/user/static/<path:filename>')
+    def base_static(filename):
+        return send_from_directory(app.root_path + '/../dist/user/static/', filename)
+
+
+    @app.route('/#/user/')
+    @app.route('/user/')
+    def user():
+        return render_template("/user/index.html")
 
 if __name__ == "__main__":
     app.logger.warning(
